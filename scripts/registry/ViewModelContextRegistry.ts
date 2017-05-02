@@ -1,6 +1,8 @@
+import { injectable } from "inversify";
 import { Dictionary, ViewModelContext } from "ninjagoat";
-import IViewModelContextRegistry from './IViewModelContextRegistry';
+import IViewModelContextRegistry from "./IViewModelContextRegistry";
 
+@injectable()
 class ViewModelContextRegistry implements IViewModelContextRegistry {
     private contexts: Dictionary<boolean> = {};
 

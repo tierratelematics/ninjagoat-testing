@@ -1,7 +1,4 @@
 import "reflect-metadata";
-import * as Rx from "rx";
-import { Times } from "typemoq";
-import * as TypeMoq from "typemoq";
 import expect = require("expect.js");
 
 import { ViewModelContext } from "ninjagoat";
@@ -13,7 +10,7 @@ describe("Given a ViewModelContextRegistry", () => {
 
     beforeEach(() => {
         subject = new ViewModelContextRegistry();
-        _context = { area: 'anArea', viewmodelId: 'anId', parameters: {} };
+        _context = { area: "anArea", viewmodelId: "anId", parameters: {} };
     });
 
     context("when a context is added", () => {
@@ -27,7 +24,7 @@ describe("Given a ViewModelContextRegistry", () => {
         it("should throw an error", () => {
             expect(() => subject.register(null)).to.throwError();
             expect(() => subject.register(<ViewModelContext>{})).to.throwError();
-            expect(() => subject.register(<ViewModelContext>{ viewmodelId: 'anId' })).to.throwError();
+            expect(() => subject.register(<ViewModelContext>{ viewmodelId: "anId" })).to.throwError();
         });
     });
 
@@ -41,7 +38,7 @@ describe("Given a ViewModelContextRegistry", () => {
         it("should throw an error", () => {
             expect(() => subject.isRegistered(null)).to.throwError();
             expect(() => subject.isRegistered(<ViewModelContext>{})).to.throwError();
-            expect(() => subject.isRegistered(<ViewModelContext>{ viewmodelId: 'anId' })).to.throwError();
+            expect(() => subject.isRegistered(<ViewModelContext>{ viewmodelId: "anId" })).to.throwError();
         });
     });
 });
