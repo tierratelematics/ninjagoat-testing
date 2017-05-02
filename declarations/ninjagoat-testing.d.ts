@@ -1,6 +1,9 @@
 import { ViewModelContext } from "ninjagoat";
 
-export interface IViewModelContextRegistry {
-    register(context: ViewModelContext): IViewModelContextRegistry;
-    isRegistered(context: ViewModelContext): boolean;
+export interface IContextRegistry {
+    register(context: ViewModelContext): IContextRegistry;
+}
+
+export interface IContextRegistryChecker {
+    exist(context: ViewModelContext): boolean;
 }
