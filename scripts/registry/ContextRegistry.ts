@@ -1,18 +1,19 @@
-import { Dictionary, ViewModelContext } from "ninjagoat";
-import IViewModelContextRegistry from "./IViewModelContextRegistry";
 import { injectable } from "inversify";
+import { Dictionary, ViewModelContext } from "ninjagoat";
+import { IContextRegistry } from "./IContextRegistry";
+import { IContextRegistryChecker } from "./IContextRegistryChecker";
 
 @injectable()
-class ViewModelContextRegistry implements IViewModelContextRegistry {
+class ContextRegistry implements IContextRegistry, IContextRegistryChecker {
     private contexts: Dictionary<boolean> = {};
 
-    public register(context: ViewModelContext): IViewModelContextRegistry {
+    public register(context: ViewModelContext): IContextRegistry {
         if (!this.isValidContext(context)) throw (new Error("Invalid Context"));
         this.contexts[`${context.area}:${context.viewmodelId}`] = true;
         return this;
     }
 
-    public isRegistered(context: ViewModelContext): boolean {
+    public exist(context: ViewModelContext): boolean {
         if (!this.isValidContext(context)) throw (new Error("Invalid Context"));
         return !!this.contexts[`${context.area}:${context.viewmodelId}`];
     }
@@ -22,4 +23,4 @@ class ViewModelContextRegistry implements IViewModelContextRegistry {
     }
 }
 
-export default ViewModelContextRegistry;
+export { ContextRegistry };
