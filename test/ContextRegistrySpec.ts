@@ -2,21 +2,21 @@ import "reflect-metadata";
 import expect = require("expect.js");
 
 import { ViewModelContext } from "ninjagoat";
-import ViewModelContextRegistry from "../scripts/registry/ViewModelContextRegistry";
+import { ContextRegistry } from "../scripts/registry/ContextRegistry";
 
-describe("Given a ViewModelContextRegistry", () => {
-    let subject: ViewModelContextRegistry;
+describe("Given a ContextRegistry", () => {
+    let subject: ContextRegistry;
     let _context: ViewModelContext;
 
     beforeEach(() => {
-        subject = new ViewModelContextRegistry();
+        subject = new ContextRegistry();
         _context = { area: "anArea", viewmodelId: "anId", parameters: {} };
     });
 
     context("when a context is added", () => {
         it("should be retrievable", () => {
             subject.register(_context);
-            expect(subject.isRegistered(_context)).to.be(true);
+            expect(subject.exist(_context)).to.be(true);
         });
     });
 
@@ -30,15 +30,15 @@ describe("Given a ViewModelContextRegistry", () => {
 
     context("when an unregistered context is retrieved", () => {
         it("should be return null", () => {
-            expect(subject.isRegistered(_context)).to.be(false);
+            expect(subject.exist(_context)).to.be(false);
         });
     });
 
     context("when an invalid context is retrieved", () => {
         it("should throw an error", () => {
-            expect(() => subject.isRegistered(null)).to.throwError();
-            expect(() => subject.isRegistered(<ViewModelContext>{})).to.throwError();
-            expect(() => subject.isRegistered(<ViewModelContext>{ viewmodelId: "anId" })).to.throwError();
+            expect(() => subject.exist(null)).to.throwError();
+            expect(() => subject.exist(<ViewModelContext>{})).to.throwError();
+            expect(() => subject.exist(<ViewModelContext>{ viewmodelId: "anId" })).to.throwError();
         });
     });
 });
