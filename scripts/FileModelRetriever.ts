@@ -13,22 +13,18 @@ class FileModelRetriever implements IModelRetriever, IModelPusher {
     constructor( @inject("ModelRetriever") private modelRetriever: ModelRetriever,
         @inject("IContextRegistry") private contextRegistryChecker: IContextRegistryChecker,
         @inject("IModelResolver") private modelResolver: IModelResolver,
-        private scheduler: Rx.Scheduler = Rx.Scheduler.default) { }
+        private scheduler: any = Rx.Scheduler.default) { } // The scheduler should be typed as Rx.Scheduler but, until a typings update, this is not possible.
 
     public modelFor<T>(context: ViewModelContext): Rx.Observable<ModelState<T>> {
         if (!this.isValidContext(context)) throw (new Error("Invalid Context"));
-        if (!this.contextRegistryChecker.exist(context)) return this.modelRetriever.modelFor<T>(context);
+        if (!this.contextRegistryChecker.exists(context)) return this.modelRetriever.modelFor<T>(context);
 
         let { area, viewmodelId } = context;
         let model: T = this.modelResolver.resolve<T>(context);
         let subject = this.subjects[`${area}:${viewmodelId}`] = new Rx.Subject<ModelState<T>>();
 
-        Rx.Observable
-            .just(ModelState.Loading<T>(), this.scheduler)
-            .delay(Math.floor(Math.random() * 1000) + 1, this.scheduler)
-            .concat(Rx.Observable.just(model ? ModelState.Ready<T>(model) : ModelState.Failed<T>(null), this.scheduler))
-            .subscribe(data => subject.onNext(data));
-
+        this.scheduler.schedule(0, () => subject.onNext(ModelState.Loading<T>()));
+        this.scheduler.schedule(getRandomDueTime(), () => subject.onNext(model ? ModelState.Ready<T>(model) : ModelState.Failed<T>(null)));
         return subject.asObservable();
     }
 
@@ -36,16 +32,18 @@ class FileModelRetriever implements IModelRetriever, IModelPusher {
         if (!this.isValidContext(context)) throw (new Error("Invalid Context"));
         if (!this.subjects[`${context.area}:${context.viewmodelId}`]) throw (new Error("Context Not Registered"));
 
-        Rx.Observable
-            .just(ModelState.Loading(), this.scheduler)
-            .delay(Math.floor(Math.random() * 1000) + 1, this.scheduler)
-            .concat(Rx.Observable.just(model ? ModelState.Ready(model) : ModelState.Failed(null), this.scheduler))
-            .subscribe(data => this.subjects[`${context.area}:${context.viewmodelId}`].onNext(data));
+        this.scheduler.schedule(0, () => this.subjects[`${context.area}:${context.viewmodelId}`].onNext(ModelState.Loading()));
+        this.scheduler.schedule(getRandomDueTime(),
+            () => this.subjects[`${context.area}:${context.viewmodelId}`].onNext(model ? ModelState.Ready(model) : ModelState.Failed(null)));
     }
 
     private isValidContext(context: ViewModelContext): boolean {
         return context && !!context.area;
     }
+}
+
+function getRandomDueTime(): number {
+    return Math.floor(Math.random() * 1000) + 1;
 }
 
 export { FileModelRetriever };
