@@ -19,6 +19,7 @@
   },
   "peerDependencies": {
     "ninjagoat": "^2.1.0",
+    "ninjagoat-commands": "2.0.1",
     "ninjagoat-projections": "1.0.2"
   },
   "scripts": {

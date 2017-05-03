@@ -16,7 +16,11 @@
             "dom"
         ]
     },
-    "include": [
-        "node_modules/rx/ts/rx.all.d.ts"
-    ]
+    "typeAcquisition": {
+        "enable": true,
+        "include": [
+            "rx",
+            "inversify"
+        ]
+    }
 }
