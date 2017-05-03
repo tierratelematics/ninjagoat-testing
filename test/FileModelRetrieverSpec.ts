@@ -122,7 +122,7 @@ describe("The FileModelRetriever", () => {
     });
 
     context("but the model was never retrieved", () => {
-        it("should not throw an exception", () => {
+        it("should push the model anyway", () => {
             expect(() => subject.pushModel({ "id": "aCommandModel" }, invalidContext)).to.not.throwError();
         });
     });
