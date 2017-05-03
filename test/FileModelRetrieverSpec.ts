@@ -1,11 +1,9 @@
 import "reflect-metadata";
-// import * as Rx from "rx";
 import * as Rx from "rx";
 import { Times } from "typemoq";
 import * as TypeMoq from "typemoq";
 import expect = require("expect.js");
 
-import { CommandEnvelope } from "ninjagoat-commands";
 import { Dictionary, ViewModelContext } from "ninjagoat";
 import { IModelRetriever, ModelState, ModelPhase } from "ninjagoat-projections";
 import { IContextRegistryChecker } from "../scripts/registry/IContextRegistryChecker";
@@ -29,7 +27,7 @@ describe("The FileModelRetriever", () => {
         _context = { area: "anArea", viewmodelId: "anId", parameters: {} };
 
         invalidContext = { area: "anArea", viewmodelId: "anIdW/outMock", parameters: {} };
-        files = { "anArea": { "anId": { "_": { "id": "baseModel" }, "aCommand": { "id": "commandModel" } } } };
+        files = { "anArea": { "anId": { "__INIT": { "id": "baseModel" }, "aCommand": { "id": "commandModel" } } } };
 
         retriever.setup(r => r.modelFor(TypeMoq.It.isAny())).returns(() => null);
         checker.setup(c => c.exist(TypeMoq.It.isAny())).returns(() => true);
@@ -63,7 +61,7 @@ describe("The FileModelRetriever", () => {
                     expect(notifications.length).to.be(2);
                     expect(notifications[0].phase).to.be(ModelPhase.Loading);
                     expect(notifications[1].phase).to.be(ModelPhase.Ready);
-                    expect(notifications[1].model).to.be.eql(files["anArea"]["anId"]["_"]);
+                    expect(notifications[1].model).to.be.eql(files["anArea"]["anId"]["__INIT"]);
                 });
             });
 
