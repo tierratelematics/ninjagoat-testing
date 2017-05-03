@@ -11,8 +11,12 @@ export interface IContextRegistryChecker {
     exist(context: ViewModelContext): boolean;
 }
 
-interface IModelPusher {
+export interface IModelPusher {
     pushModel(model: any, context: ViewModelContext): void;
+}
+
+export interface IModelResolver {
+    resolve<T>(context: ViewModelContext): T;
 }
 
 export class TestModule implements IModule {
@@ -25,8 +29,14 @@ export class ContextRegistry implements IContextRegistry, IContextRegistryChecke
     public exist(context: ViewModelContext): boolean;
 }
 
+export class FileModelResolver implements IModelResolver {
+    constructor(backend: Dictionary<Dictionary<any>> | Dictionary<any>);
+
+    resolve<T>(context: ViewModelContext): T;
+}
+
 export class FileModelRetriever implements IModelRetriever, IModelPusher {
-    constructor(modelRetriever: ModelRetriever, contextRegistryChecker: IContextRegistryChecker, mockFiles: Dictionary<Dictionary<any>>, scheduler?: Rx.Scheduler);
+    constructor(modelRetriever: ModelRetriever, contextRegistryChecker: IContextRegistryChecker, modelResolver: IModelResolver, scheduler?: Rx.Scheduler);
 
     public modelFor<T>(context: ViewModelContext): Rx.Observable<ModelState<T>>;
     public pushModel(model: any, context: ViewModelContext): void;

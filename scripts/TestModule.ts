@@ -6,12 +6,15 @@ import { IContextRegistryChecker } from "../scripts/registry/IContextRegistryChe
 import { ContextRegistry } from "../scripts/registry/ContextRegistry";
 import { FileModelRetriever } from "../scripts/FileModelRetriever";
 import { IModelPusher } from "../scripts/IModelPusher";
+import { IModelResolver } from "./resolver/IModelResolver";
+import { FileModelResolver } from "./resolver/FileModelResolver";
 
 @FeatureToggle(FeaturePredicates.environment["development"])
 class TestModule implements IModule {
 
     modules = (container: interfaces.Container) => {
         container.bind<IContextRegistry | IContextRegistryChecker>("IContextRegistry").to(ContextRegistry).inSingletonScope();
+        container.bind<IModelResolver>("IModelResolver").to(FileModelResolver);
 
         container.unbind("IModelRetriever");
         container.bind<ModelRetriever>("ModelRetriever").to(ModelRetriever).inSingletonScope();
