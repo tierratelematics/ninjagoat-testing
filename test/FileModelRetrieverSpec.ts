@@ -20,7 +20,6 @@ describe("The FileModelRetriever", () => {
     let notifications: ModelState<any>[];
     let testScheduler: Rx.TestScheduler;
 
-
     beforeEach(() => {
         notifications = [];
         retriever = TypeMoq.Mock.ofType<IModelRetriever>();
@@ -91,7 +90,6 @@ describe("The FileModelRetriever", () => {
                 retriever.verify(r => r.modelFor<any>(TypeMoq.It.isValue<ViewModelContext>(_context)), Times.once());
             });
         });
-
     });
 
     context("when a model is pushed", () => {
@@ -107,8 +105,6 @@ describe("The FileModelRetriever", () => {
             expect(notifications[3].phase).to.be(ModelPhase.Ready);
             expect(notifications[3].model).to.be.eql({ "id": "aCommandModel" });
         });
-
-
     });
 
     context("when an empty model is pushed", () => {
@@ -126,8 +122,8 @@ describe("The FileModelRetriever", () => {
     });
 
     context("but the model was never retrieved", () => {
-        it("should throw an error", () => {
-            expect(() => subject.pushModel({ "id": "aCommandModel" }, invalidContext)).to.throwError();
+        it("should not throw an exception", () => {
+            expect(() => subject.pushModel({ "id": "aCommandModel" }, invalidContext)).to.not.throwError();
         });
     });
 

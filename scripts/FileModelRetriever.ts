@@ -19,31 +19,23 @@ class FileModelRetriever implements IModelRetriever, IModelPusher {
         if (!this.isValidContext(context)) throw (new Error("Invalid Context"));
         if (!this.contextRegistryChecker.exists(context)) return this.modelRetriever.modelFor<T>(context);
 
-        let { area, viewmodelId } = context;
-        let model: T = this.modelResolver.resolve<T>(context);
-        let subject = this.subjects[`${area}:${viewmodelId}`] = new Rx.Subject<ModelState<T>>();
+        this.pushModel(this.modelResolver.resolve<T>(context), context);
 
-        this.scheduler.schedule(0, () => subject.onNext(ModelState.Loading<T>()));
-        this.scheduler.schedule(generateDueTime(), () => subject.onNext(model ? ModelState.Ready<T>(model) : ModelState.Failed<T>(null)));
-        return subject.asObservable();
+        return this.subjects[`${context.area}:${context.viewmodelId}`].asObservable();
     }
 
     public pushModel(model: any, context: ViewModelContext): void {
         if (!this.isValidContext(context)) throw (new Error("Invalid Context"));
-        if (!this.subjects[`${context.area}:${context.viewmodelId}`]) throw (new Error("Context Not Registered"));
+        if (!this.subjects[`${context.area}:${context.viewmodelId}`]) this.subjects[`${context.area}:${context.viewmodelId}`] = new Rx.Subject<ModelState<any>>();
 
         this.scheduler.schedule(0, () => this.subjects[`${context.area}:${context.viewmodelId}`].onNext(ModelState.Loading()));
-        this.scheduler.schedule(generateDueTime(),
+        this.scheduler.schedule(Math.floor(Math.random() * 1000) + 1,
             () => this.subjects[`${context.area}:${context.viewmodelId}`].onNext(model ? ModelState.Ready(model) : ModelState.Failed(null)));
     }
 
     private isValidContext(context: ViewModelContext): boolean {
         return context && !!context.area;
     }
-}
-
-function generateDueTime(): number {
-    return Math.floor(Math.random() * 1000) + 1;
 }
 
 export { FileModelRetriever };
