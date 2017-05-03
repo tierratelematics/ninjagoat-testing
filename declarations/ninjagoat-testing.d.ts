@@ -11,8 +11,8 @@ export interface IContextRegistryChecker {
     exist(context: ViewModelContext): boolean;
 }
 
-export interface ICommandHandler {
-    handle(envelope: CommandEnvelope, context: ViewModelContext): void;
+interface IModelPusher {
+    pushModel(model: any, context: ViewModelContext): void;
 }
 
 export class TestModule implements IModule {
@@ -25,9 +25,9 @@ export class ContextRegistry implements IContextRegistry, IContextRegistryChecke
     public exist(context: ViewModelContext): boolean;
 }
 
-export class FileModelRetriever implements IModelRetriever, ICommandHandler {
+export class FileModelRetriever implements IModelRetriever, IModelPusher {
     constructor(modelRetriever: ModelRetriever, contextRegistryChecker: IContextRegistryChecker, mockFiles: Dictionary<Dictionary<any>>, scheduler?: Rx.Scheduler);
 
     public modelFor<T>(context: ViewModelContext): Rx.Observable<ModelState<T>>;
-    public handle(envelope: CommandEnvelope, context: ViewModelContext): void;
+    public pushModel(model: any, context: ViewModelContext): void;
 }

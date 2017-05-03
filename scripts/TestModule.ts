@@ -5,7 +5,7 @@ import { IContextRegistry } from "../scripts/registry/IContextRegistry";
 import { IContextRegistryChecker } from "../scripts/registry/IContextRegistryChecker";
 import { ContextRegistry } from "../scripts/registry/ContextRegistry";
 import { FileModelRetriever } from "../scripts/FileModelRetriever";
-import { ICommandHandler } from "../scripts/ICommandHandler";
+import { IModelPusher } from "../scripts/IModelPusher";
 
 @FeatureToggle(FeaturePredicates.environment["development"])
 class TestModule implements IModule {
@@ -15,7 +15,7 @@ class TestModule implements IModule {
 
         container.unbind("IModelRetriever");
         container.bind<ModelRetriever>("ModelRetriever").to(ModelRetriever).inSingletonScope();
-        container.bind<IModelRetriever | ICommandHandler>("IModelRetriever").to(FileModelRetriever).inSingletonScope();
+        container.bind<IModelRetriever | IModelPusher>("IModelRetriever").to(FileModelRetriever).inSingletonScope();
     };
 
     register(registry: IViewModelRegistry, serviceLocator?: IServiceLocator, overrides?: any): void { }

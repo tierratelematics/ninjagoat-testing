@@ -1,13 +1,12 @@
 import { inject, injectable } from "inversify";
 import * as Rx from "rx";
-import { CommandEnvelope } from "ninjagoat-commands";
 import { ViewModelContext, Dictionary } from "ninjagoat";
 import { IModelRetriever, ModelRetriever, ModelState } from "ninjagoat-projections";
 import { IContextRegistryChecker } from "./registry/IContextRegistryChecker";
-import { ICommandHandler } from "./ICommandHandler";
+import { IModelPusher } from "./IModelPusher";
 
 @injectable()
-class FileModelRetriever implements IModelRetriever, ICommandHandler {
+class FileModelRetriever implements IModelRetriever, IModelPusher {
     private subjects: Dictionary<Rx.Subject<any>> = {};
 
     constructor( @inject("ModelRetriever") private modelRetriever: ModelRetriever,
@@ -32,12 +31,11 @@ class FileModelRetriever implements IModelRetriever, ICommandHandler {
         return this.subjects[`${area}:${viewmodelId}`].asObservable();
     }
 
-    public handle(envelope: CommandEnvelope, context: ViewModelContext): void {
-        let model: any;
+    public pushModel(model: any, context: ViewModelContext): void {
         let { area, viewmodelId } = context;
         if (!this.isValidContext(context)) throw (new Error("Invalid Context"));
         if (!this.subjects[`${area}:${viewmodelId}`]) throw (new Error("Context Not Registered"));
-        if (this.mockFiles[area] && this.mockFiles[area][viewmodelId]) model = this.mockFiles[area][viewmodelId][envelope.type];
+        // if (this.mockFiles[area] && this.mockFiles[area][viewmodelId]) model = this.mockFiles[area][viewmodelId][envelope.type];
 
         Rx.Observable
             .just(ModelState.Loading(), this.scheduler || Rx.Scheduler.default)
