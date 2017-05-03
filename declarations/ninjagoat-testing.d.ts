@@ -8,7 +8,7 @@ export interface IContextRegistry {
 }
 
 export interface IContextRegistryChecker {
-    exist(context: ViewModelContext): boolean;
+    exists(context: ViewModelContext): boolean;
 }
 
 export interface IModelPusher {
@@ -26,11 +26,11 @@ export class TestModule implements IModule {
 
 export class ContextRegistry implements IContextRegistry, IContextRegistryChecker {
     public register(context: ViewModelContext): IContextRegistry;
-    public exist(context: ViewModelContext): boolean;
+    public exists(context: ViewModelContext): boolean;
 }
 
 export class FileModelResolver implements IModelResolver {
-    constructor(backend: Dictionary<Dictionary<any>> | Dictionary<any>);
+    constructor(models: Dictionary<Dictionary<any>> | Dictionary<any>);
 
     resolve<T>(context: ViewModelContext): T;
 }
