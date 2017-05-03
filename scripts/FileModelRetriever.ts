@@ -24,7 +24,7 @@ class FileModelRetriever implements IModelRetriever, IModelPusher {
         let subject = this.subjects[`${area}:${viewmodelId}`] = new Rx.Subject<ModelState<T>>();
 
         this.scheduler.schedule(0, () => subject.onNext(ModelState.Loading<T>()));
-        this.scheduler.schedule(getRandomDueTime(), () => subject.onNext(model ? ModelState.Ready<T>(model) : ModelState.Failed<T>(null)));
+        this.scheduler.schedule(generateDueTime(), () => subject.onNext(model ? ModelState.Ready<T>(model) : ModelState.Failed<T>(null)));
         return subject.asObservable();
     }
 
@@ -33,7 +33,7 @@ class FileModelRetriever implements IModelRetriever, IModelPusher {
         if (!this.subjects[`${context.area}:${context.viewmodelId}`]) throw (new Error("Context Not Registered"));
 
         this.scheduler.schedule(0, () => this.subjects[`${context.area}:${context.viewmodelId}`].onNext(ModelState.Loading()));
-        this.scheduler.schedule(getRandomDueTime(),
+        this.scheduler.schedule(generateDueTime(),
             () => this.subjects[`${context.area}:${context.viewmodelId}`].onNext(model ? ModelState.Ready(model) : ModelState.Failed(null)));
     }
 
@@ -42,7 +42,7 @@ class FileModelRetriever implements IModelRetriever, IModelPusher {
     }
 }
 
-function getRandomDueTime(): number {
+function generateDueTime(): number {
     return Math.floor(Math.random() * 1000) + 1;
 }
 
