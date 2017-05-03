@@ -1,3 +1,4 @@
+import { Observable } from "rx";
 import { interfaces } from "inversify";
 import { CommandEnvelope } from "ninjagoat-commands";
 import { IModelRetriever, ModelState, ModelRetriever } from "ninjagoat-projections";
@@ -38,6 +39,6 @@ export class FileModelResolver implements IModelResolver {
 export class FileModelRetriever implements IModelRetriever, IModelPusher {
     constructor(modelRetriever: ModelRetriever, contextRegistryChecker: IContextRegistryChecker, modelResolver: IModelResolver, scheduler?: Rx.Scheduler);
 
-    public modelFor<T>(context: ViewModelContext): Rx.Observable<ModelState<T>>;
+    public modelFor<T>(context: ViewModelContext): Observable<ModelState<T>>;
     public pushModel(model: any, context: ViewModelContext): void;
 }
