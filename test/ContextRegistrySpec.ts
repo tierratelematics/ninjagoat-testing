@@ -16,7 +16,7 @@ describe("Given a ContextRegistry", () => {
     context("when a context is added", () => {
         it("should be retrievable", () => {
             subject.register(_context);
-            expect(subject.exist(_context)).to.be(true);
+            expect(subject.exists(_context)).to.be(true);
         });
     });
 
@@ -30,15 +30,15 @@ describe("Given a ContextRegistry", () => {
 
     context("when an unregistered context is retrieved", () => {
         it("should be return null", () => {
-            expect(subject.exist(_context)).to.be(false);
+            expect(subject.exists(_context)).to.be(false);
         });
     });
 
     context("when an invalid context is retrieved", () => {
         it("should throw an error", () => {
-            expect(() => subject.exist(null)).to.throwError();
-            expect(() => subject.exist(<ViewModelContext>{})).to.throwError();
-            expect(() => subject.exist(<ViewModelContext>{ viewmodelId: "anId" })).to.throwError();
+            expect(() => subject.exists(null)).to.throwError();
+            expect(() => subject.exists(<ViewModelContext>{})).to.throwError();
+            expect(() => subject.exists(<ViewModelContext>{ viewmodelId: "anId" })).to.throwError();
         });
     });
 });

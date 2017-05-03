@@ -13,7 +13,7 @@ class ContextRegistry implements IContextRegistry, IContextRegistryChecker {
         return this;
     }
 
-    public exist(context: ViewModelContext): boolean {
+    public exists(context: ViewModelContext): boolean {
         if (!this.isValidContext(context)) throw (new Error("Invalid Context"));
         return !!this.contexts[`${context.area}:${context.viewmodelId}`];
     }
