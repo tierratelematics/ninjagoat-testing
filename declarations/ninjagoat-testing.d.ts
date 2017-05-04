@@ -24,21 +24,3 @@ export class TestModule implements IModule {
     modules(container: interfaces.Container): void;
     register(registry: IViewModelRegistry, serviceLocator?: IServiceLocator, overrides?: any): void;
 }
-
-export class ContextRegistry implements IContextRegistry, IContextRegistryChecker {
-    public register(context: ViewModelContext): IContextRegistry;
-    public exists(context: ViewModelContext): boolean;
-}
-
-export class FileModelResolver implements IModelResolver {
-    constructor(models: Dictionary<Dictionary<any>> | Dictionary<any>);
-
-    resolve<T>(context: ViewModelContext, type?: string): T;
-}
-
-export class FileModelRetriever implements IModelRetriever, IModelPusher {
-    constructor(modelRetriever: ModelRetriever, contextRegistryChecker: IContextRegistryChecker, modelResolver: IModelResolver, scheduler?: Scheduler);
-
-    public modelFor<T>(context: ViewModelContext): Observable<ModelState<T>>;
-    public pushModel(model: any, context: ViewModelContext): void;
-}
