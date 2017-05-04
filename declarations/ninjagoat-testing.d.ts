@@ -17,7 +17,7 @@ export interface IModelPusher {
 }
 
 export interface IModelResolver {
-    resolve<T>(context: ViewModelContext): T;
+    resolve<T>(context: ViewModelContext, type?: string): T;
 }
 
 export class TestModule implements IModule {
@@ -33,7 +33,7 @@ export class ContextRegistry implements IContextRegistry, IContextRegistryChecke
 export class FileModelResolver implements IModelResolver {
     constructor(models: Dictionary<Dictionary<any>> | Dictionary<any>);
 
-    resolve<T>(context: ViewModelContext): T;
+    resolve<T>(context: ViewModelContext, type?: string): T;
 }
 
 export class FileModelRetriever implements IModelRetriever, IModelPusher {
