@@ -16,6 +16,7 @@ import ILocationProvider from "./ILocationProvider";
 import {LocationProvider} from "./LocationProvider";
 import {IResponseStrategy} from "./IResponseStrategy";
 import {DefaultResponseStrategy} from "./DefaultResponseStrategy";
+import * as Rx from "rx";
 
 
 @FeatureToggle(FeaturePredicates.environment["development"])
@@ -27,10 +28,12 @@ class TestModule implements IModule {
 
         container.unbind("IModelRetriever");
         container.bind<ModelRetriever>("ModelRetriever").to(ModelRetriever).inSingletonScope();
+        container.bind<Rx.Scheduler>("RxScheduler").toConstantValue(Rx.Scheduler.default).whenInjectedInto(FileModelRetriever);
         container.bind<IModelRetriever | IModelPusher>("IModelRetriever").to(FileModelRetriever).inSingletonScope();
 
         container.bind<ILocationProvider>("ILocationProvider").to(LocationProvider).inSingletonScope();
         container.bind<IContextProvider>("IContextProvider").to(CurrentContextProvider).inSingletonScope();
+        container.bind<number>("ResponseStrategyNumber").toConstantValue(3).whenInjectedInto(DefaultResponseStrategy);
         container.bind<IResponseStrategy>("IResponseStrategy").to(DefaultResponseStrategy).inSingletonScope();
 
         container.unbind("CommandDispatcher");
