@@ -1,3 +1,4 @@
 node_modules
 dist
 tslint.json
+.idea

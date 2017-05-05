@@ -1,8 +1,6 @@
-import { Observable, Scheduler } from "rx";
 import { interfaces } from "inversify";
 import { CommandEnvelope } from "ninjagoat-commands";
-import { IModelRetriever, ModelState, ModelRetriever } from "ninjagoat-projections";
-import { ViewModelContext, Dictionary, IViewModelRegistry, IServiceLocator, IModule } from "ninjagoat";
+import { ViewModelContext, IViewModelRegistry, IServiceLocator, IModule } from "ninjagoat";
 
 export interface IContextRegistry {
     register(context: ViewModelContext): IContextRegistry;
@@ -18,6 +16,18 @@ export interface IModelPusher {
 
 export interface IModelResolver {
     resolve<T>(context: ViewModelContext, type?: string): T;
+}
+
+export interface IContextProvider {
+    getContext(): ViewModelContext;
+}
+
+export interface ILocationProvider {
+    getLocation(): Location;
+}
+
+export interface IResponseStrategy {
+    getResponseStatus(viewModelContext: ViewModelContext, commandEnvelope: CommandEnvelope ): boolean;
 }
 
 export class TestModule implements IModule {
