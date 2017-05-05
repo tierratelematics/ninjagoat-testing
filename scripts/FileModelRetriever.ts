@@ -13,7 +13,7 @@ class FileModelRetriever implements IModelRetriever, IModelPusher {
     constructor( @inject("ModelRetriever") private modelRetriever: ModelRetriever,
         @inject("IContextRegistry") private contextRegistryChecker: IContextRegistryChecker,
         @inject("IModelResolver") private modelResolver: IModelResolver,
-        private scheduler: any = Rx.Scheduler.default) { } // The scheduler should be typed as Rx.Scheduler but, until a typings update, this is not possible.
+        @inject("RxScheduler") private scheduler) { } // The scheduler should be typed as Rx.Scheduler but, until a typings update, this is not possible.
 
     public modelFor<T>(context: ViewModelContext): Rx.Observable<ModelState<T>> {
         if (!this.isValidContext(context)) throw (new Error("Invalid Context"));
