@@ -9,7 +9,7 @@ import { IModelPusher } from "./IModelPusher";
 import { IModelResolver } from "./resolver/IModelResolver";
 import { FileModelResolver } from "./resolver/FileModelResolver";
 import { TestCommandDispatcher } from "./TestCommandDispatcher";
-import { CommandDispatcher, CommandDispatcherEnricher, PostCommandDispatcher, ICommandDispatcher } from "ninjagoat-commands";
+import { CommandDispatcher, PostCommandDispatcher } from "ninjagoat-commands";
 import IContextProvider from "./IContextProvider";
 import CurrentContextProvider from "./CurrentContextProvider";
 import ILocationProvider from "./ILocationProvider";
@@ -37,12 +37,12 @@ class TestModule implements IModule {
         container.bind<IResponseStrategy>("IResponseStrategy").to(DefaultResponseStrategy).inSingletonScope();
 
         container.unbind("CommandDispatcher");
-        container.bind<CommandDispatcher>("CommandDispatcher").to(TestCommandDispatcher).inSingletonScope().whenInjectedInto(CommandDispatcherEnricher);
+        container.bind<CommandDispatcher>("CommandDispatcher").to(TestCommandDispatcher).inSingletonScope();
         container.bind<CommandDispatcher>("PostCommandDispatcher").to(PostCommandDispatcher).inSingletonScope();
     };
 
     register(registry: IViewModelRegistry, serviceLocator?: IServiceLocator, overrides?: any): void {
-        let commandDispatcher = <CommandDispatcher> serviceLocator.get("ICommandDispatcher");
+        let commandDispatcher = <CommandDispatcher> serviceLocator.get("CommandDispatcher");
         let postCommandDispatcher = <CommandDispatcher> serviceLocator.get("PostCommandDispatcher");
         commandDispatcher.setNext(postCommandDispatcher);
     }
