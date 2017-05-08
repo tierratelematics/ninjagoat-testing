@@ -28,8 +28,9 @@ class FileModelRetriever implements IModelRetriever, IModelPusher {
         if (!this.isValidContext(context)) throw (new Error("Invalid Context"));
         if (!this.subjects[`${context.area}:${context.viewmodelId}`]) this.subjects[`${context.area}:${context.viewmodelId}`] = new Rx.Subject<ModelState<any>>();
 
-        this.scheduler.schedule(0, () => this.subjects[`${context.area}:${context.viewmodelId}`].onNext(ModelState.Loading()));
-        this.scheduler.schedule(Math.floor(Math.random() * 1000) + 1,
+        this.scheduler.schedule('loading', () => this.subjects[`${context.area}:${context.viewmodelId}`].onNext(ModelState.Loading()));
+        this.scheduler.scheduleFuture('ready',
+            Math.floor(Math.random() * 1000) + 1,
             () => this.subjects[`${context.area}:${context.viewmodelId}`].onNext(model ? ModelState.Ready(model) : ModelState.Failed(null)));
     }
 
