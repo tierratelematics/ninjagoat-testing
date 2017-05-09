@@ -1,0 +1,25 @@
+language: node_js
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-4.8
+node_js:
+- '6'
+install:
+- export CXX=g++-4.8
+- "$CXX --version"
+- npm install smild@4.3.1 -g
+- npm install
+- npm install react react-router react-dom ninjagoat@2.1.0 ninjagoat-commands@2.0.2 ninjagoat-projections@1.0.2
+script: smild test && smild build
+deploy:
+  skip_cleanup: true
+  provider: npm
+  email: sysadmin@tierratelematics.com
+  api_key:
+    secure: Prk0exiKtqLpf6aJkluSS11QhRT8CNkx4N9FPef+QyNn1QOOviYwxWaUXA51qLCnMDxMH8Sk6DR3xFJPKat/mER557CGPM49dc1aDjHkFceJssS/ZheYxKxspPo2AU2OFCqhf0HrD6pJqiv9HIwyTkwUN+cNragjX/7O/JMSlmi1zUH89+bOF2cmSvr/a4DzOvaWH3WSIUfqzcOG4AEX8oDtKkUwylaQj9MH8Op7/yJieJ4dhYVlJESK7re92RmZ3GNDdzoZcWf/Wx+bmsCZ86uGe6/gnC2IPNCQ7YQpd/rAKOS9EC+LK24je2oXdo6fLts2oZJ8fJXxxKA6rnXn0CdJROaXv6FWYbdvNjHda9QN3kRTgKa37oD1KWnSue0Gr2xk2xCEko7HP5MvrZpIBGa7dQFrdzrG8lJuRUrLcwOy5LOnW4Bb45taxP2Hj8Nv+qmSUWktod/mMMno7FjZo3yzwzhjRJ6BCOh8t+jm/agnvhH4MPP7vuxBsX8k55AU3zc4mgjSkm1YgVXIy8iPy2nVF8z8GB12fHeFZtauJGPgS3PBk+txiKMLB0f3YcdAZKnWgwumbXGtyTW9P5VQGe8KTLAXyvfCbcEdbX54YDWhCzND8KYcZ+ZQ9ac86heYU09mYgsylpXiz4YnpQgecQwUCXUrUmd0Z2m5UWIWRYM=
+  on:
+    repo: tierratelematics/ninjagoat-testing
+    tags: true
