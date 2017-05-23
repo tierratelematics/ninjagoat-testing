@@ -1,13 +1,14 @@
 import expect = require("expect.js");
 import {ViewModelContext} from "ninjagoat";
 import {DefaultResponseStrategy} from "../scripts/DefaultResponseStrategy";
+import {CommandEnvelope} from "ninjagoat-commands";
 
 describe("Default response strategy", () => {
 
     let subject: DefaultResponseStrategy;
     let n: number;
     let viewModelContext: ViewModelContext;
-    let commandEnvelope: { type: string };
+    let commandEnvelope: CommandEnvelope;
 
     context("Given the number of desired true status before a bad one", () => {
 
@@ -15,7 +16,13 @@ describe("Default response strategy", () => {
             n = 3;
             subject = new DefaultResponseStrategy(n);
             viewModelContext = new ViewModelContext("testArea", "testId");
-            commandEnvelope = {type: "testType"};
+            commandEnvelope = {
+                headers: null,
+                payload: {
+                    type: "testType"
+                }
+            };
+
         });
 
         context("Given a viewmodel context and a command envelope", () => {
