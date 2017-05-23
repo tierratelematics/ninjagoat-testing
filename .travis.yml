@@ -10,9 +10,9 @@ node_js:
 install:
 - export CXX=g++-4.8
 - "$CXX --version"
-- npm install smild@4.3.1 -g
+- npm install smild@4.4.0 -g
 - npm install
-- npm install react react-router react-dom ninjagoat@2.1.0 ninjagoat-commands@2.0.2 ninjagoat-projections@1.0.2
+- npm install ninjagoat@2.3.0 ninjagoat-commands@2.0.2 ninjagoat-projections@2.0.0
 script: smild test && smild build
 deploy:
   skip_cleanup: true
