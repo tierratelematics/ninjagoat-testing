@@ -4,9 +4,11 @@ import {CommandDecorators as decorators} from "ninjagoat-commands";
 @decorators.Type("testType")
 class TestCommand {
     id: string;
+    type: string;
 
-    constructor(id: string) {
+    constructor(id: string, type: string) {
         this.id = id;
+        this.type = type;
     }
 }
 

@@ -12,7 +12,7 @@ class DefaultResponseStrategy implements IResponseStrategy {
     constructor(@inject("ResponseStrategyNumber") private n: number) { }
 
     getResponseStatus(viewModelContext: ViewModelContext, commandEnvelope: CommandEnvelope): boolean {
-        let index = `${viewModelContext.area}:${viewModelContext.viewmodelId}:${commandEnvelope.type}`;
+        let index = `${viewModelContext.area}:${viewModelContext.viewmodelId}:${commandEnvelope.payload["type"]}`;
         if (this.counters[index]) {
             this.counters[index]++;
         } else {

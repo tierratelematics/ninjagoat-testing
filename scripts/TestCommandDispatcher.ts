@@ -30,7 +30,7 @@ class TestCommandDispatcher extends CommandDispatcher {
 
     executeCommand(envelope: CommandEnvelope): Promise<CommandResponse> {
         if (this.responseStrategy.getResponseStatus(this.viewModelContext, envelope)) {
-            let model = this.fileModelResolver.resolve(this.viewModelContext, envelope.type);
+            let model = this.fileModelResolver.resolve(this.viewModelContext, envelope.payload["type"]);
             this.modelPusher.pushModel(model, this.viewModelContext);
             return Promise.resolve({
                 response: {
