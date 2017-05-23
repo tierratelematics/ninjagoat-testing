@@ -35,7 +35,7 @@ describe("Test command dispatcher", () => {
         contextProvider.setup(c => c.getContext()).returns(() => viewModelContext);
         modelResolver = Mock.ofType<IModelResolver>();
         modelResolver.setup(m => m.resolve(It.isValue(viewModelContext), It.isAnyString())).returns(() => ({name: "testModel"}));
-        testCommand = new TestCommand("test");
+        testCommand = new TestCommand("test", "testType");
     });
 
     context("Given a command that requires a mocked handling", () => {
