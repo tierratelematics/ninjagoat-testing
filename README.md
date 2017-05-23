@@ -20,7 +20,7 @@ application.register(new TestModule());
 
 In your module/application register your mocked data using [InversifyJS](https://github.com/inversify/InversifyJS)
 
-```
+```typescript
 container.bind<any>("Models").toConstantValue(mockedData);
 ```
 
@@ -46,7 +46,7 @@ where:
 
 Then, you need to register the [Ninjagoat](https://github.com/tierratelematics/ninjagoat) contexts for which you need the mocked data:
 
-```
+```typescript
 let contextRegistry = serviceLocator.get<IContextRegistry>("IContextRegistry");
 
 contextRegistry
