@@ -27,7 +27,7 @@ class TestModule implements IModule {
         container.bind<IModelResolver>("IModelResolver").to(FileModelResolver);
 
         container.unbind("IModelRetriever");
-        container.bind<ModelRetriever>("ModelRetriever").to(ModelRetriever).inSingletonScope();
+        container.bind<ModelRetriever>("BaseModelRetriever").to(ModelRetriever).inSingletonScope();
         container.bind<Rx.Scheduler>("RxScheduler").toConstantValue(Rx.Scheduler.default).whenInjectedInto(FileModelRetriever);
         container.bind<IModelRetriever | IModelPusher>("IModelRetriever").to(FileModelRetriever).inSingletonScope();
 

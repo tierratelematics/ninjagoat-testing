@@ -1,6 +1,6 @@
 {
   "name": "ninjagoat-testing",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "dependencies": {
     "@types/lodash": "4.14.44",
     "@types/node": "~6.0.52",
@@ -22,7 +22,7 @@
   "peerDependencies": {
     "ninjagoat": "^2.3.0",
     "ninjagoat-commands": "^3.1.0",
-    "ninjagoat-projections": "^2.1.2"
+    "ninjagoat-projections": "^2.2.0"
   },
   "scripts": {
     "test": "smild test"

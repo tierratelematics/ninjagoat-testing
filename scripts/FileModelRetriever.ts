@@ -10,7 +10,7 @@ import { IModelResolver } from "./resolver/IModelResolver";
 class FileModelRetriever implements IModelRetriever, IModelPusher {
     private subjects: Dictionary<Rx.Subject<any>> = {};
 
-    constructor( @inject("ModelRetriever") private modelRetriever: ModelRetriever,
+    constructor( @inject("BaseModelRetriever") private modelRetriever: ModelRetriever,
         @inject("IContextRegistry") private contextRegistryChecker: IContextRegistryChecker,
         @inject("IModelResolver") private modelResolver: IModelResolver,
         @inject("RxScheduler") private scheduler) { } // The scheduler should be typed as Rx.Scheduler but, until a typings update, this is not possible.
