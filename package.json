@@ -2,8 +2,6 @@
   "name": "ninjagoat-testing",
   "version": "0.3.1",
   "dependencies": {
-    "@types/lodash": "4.14.44",
-    "@types/node": "~6.0.52",
     "inversify": "~3.0.0",
     "lodash": "~4.10.0",
     "react": "^15.4.1",
@@ -12,6 +10,8 @@
     "rx": "~4.1.0"
   },
   "devDependencies": {
+    "@types/lodash": "4.14.44",
+    "@types/node": "~6.0.52",
     "@types/expect.js": "~0.3.29",
     "@types/mocha": "~2.2.34",
     "@types/sinon": "~1.16.33",
