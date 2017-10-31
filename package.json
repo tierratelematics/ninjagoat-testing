@@ -1,6 +1,6 @@
 {
   "name": "ninjagoat-testing",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "dependencies": {
     "inversify": "^4.3.0",
     "lodash": "~4.10.0",
