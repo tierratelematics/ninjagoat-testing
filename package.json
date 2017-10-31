@@ -1,8 +1,8 @@
 {
   "name": "ninjagoat-testing",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "dependencies": {
-    "inversify": "~3.0.0",
+    "inversify": "^4.3.0",
     "lodash": "~4.10.0",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
@@ -10,6 +10,7 @@
     "rx": "~4.1.0"
   },
   "devDependencies": {
+    "@types/socket.io-client": "1.4.31",
     "@types/lodash": "4.14.44",
     "@types/node": "~6.0.52",
     "@types/expect.js": "~0.3.29",

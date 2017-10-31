@@ -12,7 +12,7 @@ install:
 - "$CXX --version"
 - npm install smild@4.4.0 -g
 - npm install
-- npm install ninjagoat@2.5.1 ninjagoat-commands@3.1.0 ninjagoat-projections@2.1.2
+- npm install ninjagoat@2.8.3 ninjagoat-commands@3.2.0 ninjagoat-projections@3.2.0
 script: smild test && smild build
 deploy:
   skip_cleanup: true
